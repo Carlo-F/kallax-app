@@ -7,6 +7,7 @@ require('express-async-errors')
 
 const { PORT, inProduction } = require('@util/common')
 
+
 const app = express()
 
 // Require is here so we can delete it from cache when files change (*)

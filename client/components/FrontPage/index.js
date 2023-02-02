@@ -5,7 +5,7 @@ const FrontPage = () => (
     <h1>KALLAX Homepage</h1>
     <h5>My personal swedish bookshelf</h5>
     <p>
-      <a href="/todo">Check your Todo</a>
+      <a href="/book">Check your Books</a>
     </p>
   </div>
 )

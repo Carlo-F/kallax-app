@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import FrontPage from 'Components/FrontPage'
-import TodoView from 'Components/TodoView'
+import BookView from 'Components/BookView'
 
 export default () => (
   <div className="content">
     <Switch>
       <Route exact path="/" component={FrontPage} />
-      <Route path="/todo" component={TodoView} />
+      <Route path="/book" component={BookView} />
     </Switch>
   </div>
 )

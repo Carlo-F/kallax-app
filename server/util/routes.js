@@ -1,11 +1,11 @@
 const Router = require('express')
-const todos = require('@controllers/todosController')
+const books = require('@controllers/booksController')
 
 const router = Router()
 
-router.get('/todos', todos.getAll)
-router.post('/todos', todos.create)
-router.delete('/todos/:id', todos.destroy)
-router.get('/todos/:id/check', todos.check)
+router.get('/books', books.getAll)
+router.post('/books', books.create)
+router.delete('/books/:id', books.destroy)
+router.get('/books/:id/read', books.read)
 
 module.exports = router

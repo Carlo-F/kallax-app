@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const TodoForm = ({ postTodo }) => {
-  const [todo, setTodo] = useState('')
+const BookForm = ({ postBook }) => {
+  const [book, setBook] = useState('')
 
   const handleSubmit = () => {
-    postTodo(todo)
+    postBook(book)
   }
 
-  const handleChange = ({ target }) => setTodo(target.value)
+  const handleChange = ({ target }) => setBook(target.value)
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicText">
-        <Form.Label>Enter todo</Form.Label>
-        <Form.Control type="text" placeholder="es. shopping" value={todo} onChange={handleChange} />
+        <Form.Label>Enter book</Form.Label>
+        <Form.Control type="text" placeholder="es. shopping" value={book} onChange={handleChange} />
       </Form.Group>
       <Button variant="primary" type="submit">
         Save
@@ -23,4 +23,4 @@ const TodoForm = ({ postTodo }) => {
   )
 }
 
-export default TodoForm
+export default BookForm
