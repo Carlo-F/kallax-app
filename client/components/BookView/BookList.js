@@ -18,7 +18,7 @@ const BookList = ({ books, deleteBook, readBook }) => {
       <ul>
         {books.map((book) => (
           <li key={book.id}>
-            <span className="m-2">{book.title} by {book.author} - times read: {book.times_read}</span>
+            <span className="m-2"><strong>{book.title}</strong> by <em>{book.author}</em> - times read: {book.times_read}</span>
             <Button variant="success" className="m-2" onClick={handleRead(book)}>Read</Button>
             <Button variant="danger" className="m-2" onClick={handleDelete(book)}>Delete</Button>
           </li>
