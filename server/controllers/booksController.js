@@ -4,9 +4,9 @@ const connection = require('@util/database')
 let userId = '1'
 
 const getAll = async (req, res) => {
-  const sql = `SELECT id, title, author, isbn_code, created_at, plot, times_read FROM books WHERE user_id=${userId} AND deleted_at IS NULL`
+  const sql = `SELECT * FROM books WHERE user_id=? AND deleted_at IS NULL`
 
-  connection.query(sql, function (err, result, fields) {
+  connection.query(sql, [userId], function (err, result, fields) {
     if (err) {
         throw new ApplicationError(`error: ${err.message}`, 400)
     }
@@ -18,7 +18,7 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
   const { book } = req.body
 
-  if (!book) throw new ApplicationError('book is required', 400)
+  if (!book || Object.keys(book).length === 0) throw new ApplicationError('book is required', 400)
 
   const sql = `
     INSERT INTO books (user_id, title, author, isbn_code, plot, times_read) 
@@ -37,10 +37,10 @@ const create = async (req, res) => {
 const destroy = async (req, res) => {
     const sql = `
     UPDATE books SET deleted_at=now() 
-    WHERE id=${req.params.id} AND user_id=${userId}
+    WHERE id=? AND user_id=?
   `
 
-  connection.query(sql, function (err, result, fields) {
+  connection.query(sql, [req.params.id, userId],function (err, result, fields) {
       if (err) {
           throw new ApplicationError(`error: ${err.message}`, 400)
       }
@@ -50,9 +50,9 @@ const destroy = async (req, res) => {
 
 const read = async (req, res) => {
 
-  const sql = `UPDATE books SET times_read = times_read + 1 WHERE id=${req.params.id} AND user_id=${userId}`
+  const sql = `UPDATE books SET times_read = times_read + 1 WHERE id=? AND user_id=?`
 
-  connection.query(sql, function (err, result, fields) {
+  connection.query(sql, [req.params.id, userId],function (err, result, fields) {
     if (err) {
         throw new ApplicationError(`error: ${err.message}`, 400)
     }
@@ -64,9 +64,37 @@ const read = async (req, res) => {
 
 }
 
+const getBook = async (req, res) => {
+  const sql = `SELECT * FROM books WHERE user_id=? AND id=? AND deleted_at IS NULL LIMIT 1`
+
+  connection.query(sql, [userId, req.params.id], function (err, result, fields) {
+    if (err) {
+        throw new ApplicationError(`error: ${err.message}`, 400)
+    }
+    res.send(result[0])
+  });
+
+}
+
+const updateBook = async (req, res) => {
+  const id = req.params.id
+  const request = (({title, author, isbn_code, plot, times_read}) => ({title, author, isbn_code, plot, times_read}))(req.body.book)
+
+  const sql = `UPDATE books SET ? WHERE id=?`
+
+  connection.query(sql, [request, id], function (err, result, fields) {
+    if (err) {
+        throw new ApplicationError(`error: ${err.message}`, 400)
+    }
+    res.sendStatus(200)
+  });
+}
+
 module.exports = {
   getAll,
   create,
   destroy,
   read,
+  getBook,
+  updateBook,
 }

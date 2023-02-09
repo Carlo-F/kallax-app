@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 
 const BookList = ({ books, deleteBook, readBook }) => {
@@ -18,7 +19,7 @@ const BookList = ({ books, deleteBook, readBook }) => {
       <ul>
         {books.map((book) => (
           <li key={book.id}>
-            <span className="m-2"><strong>{book.title}</strong> by <em>{book.author}</em> - times read: {book.times_read}</span>
+            <span className="m-2"><Link to={`/book/${book.id}`}>{book.title}</Link> by <em>{book.author}</em> - times read: {book.times_read}</span>
             <Button variant="success" className="m-2" onClick={handleRead(book)}>Read</Button>
             <Button variant="danger" className="m-2" onClick={handleDelete(book)}>Delete</Button>
           </li>

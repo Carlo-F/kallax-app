@@ -41,7 +41,7 @@ if (!inProduction) {
   app.use(devMiddleware)
   app.use(hotMiddleWare(compiler))
   app.use('*', (req, res, next) => {
-    const filename = path.join(compiler.outputPath, 'index.html')
+    const filename = path.join(compiler.outputPath, './index.html')
     devMiddleware.waitUntilValid(() => {
       compiler.outputFileSystem.readFile(filename, (err, result) => {
         if (err) return next(err)
@@ -53,7 +53,7 @@ if (!inProduction) {
   })
 } else {
   const DIST_PATH = path.resolve(__dirname, './dist')
-  const INDEX_PATH = path.resolve(DIST_PATH, 'index.html')
+  const INDEX_PATH = path.resolve(DIST_PATH, './index.html')
 
   app.use(express.static(DIST_PATH))
   app.get('*', (req, res) => res.sendFile(INDEX_PATH))

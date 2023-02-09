@@ -21,3 +21,13 @@ export const readBook = async (book) => {
   const response = await axios.get(`${basePath}/${book.id}/read`)
   return response.data
 }
+
+export const getBook = async (id) => {
+  const response = await axios.get(`${basePath}/${id}`)
+  return response.data
+}
+
+export const updateBook = async (book) => {
+  const response = await axios.put(`${basePath}/${book.id}/update`, {book})
+  return response.data
+}
