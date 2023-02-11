@@ -8,29 +8,36 @@ import BookForm from 'Components/BookView/BookForm'
 
 const BookView = () => {
   const [books, setBooks] = useState([])
+  const [user, setUser] = useState(null)
 
-  const handleGetBooks = async () => {
+  const handleGetBooks = async (userId) => {
     const newBooks = await getBooks()
-    setBooks(newBooks)
+    const userBooks = newBooks.filter(book => book.user_id === userId)
+    setBooks(userBooks)
   }
 
   useEffect(() => {
-    handleGetBooks()
+    const loggedKallaxJSON = window.localStorage.getItem('loggedKallaxUser')
+    if (loggedKallaxJSON) {
+      const user = JSON.parse(loggedKallaxJSON)
+      setUser(user)
+      handleGetBooks(user.id)
+    }
   }, [])
 
   const handlePostBook = async (newBook) => {
-    await postBook(newBook)
-    handleGetBooks()
+    await postBook({ userId: user.id, ...newBook })
+    handleGetBooks(user.id)
   }
 
   const handleDeleteBook = async (book) => {
     await deleteBook(book)
-    handleGetBooks()
+    handleGetBooks(user.id)
   }
 
   const handleReadBook = async (book) => {
     await readBook(book)
-    handleGetBooks()
+    handleGetBooks(user.id)
   }
 
   return (

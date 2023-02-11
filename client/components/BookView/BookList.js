@@ -6,7 +6,9 @@ const BookList = ({ books, deleteBook, readBook }) => {
   if (!books) return null
 
   const handleDelete = (book) => () => {
-    deleteBook(book)
+    if (confirm('Are you sure you want to delete this book')) {
+      deleteBook(book)
+    }
   }
 
   const handleRead = (book) => () => {
