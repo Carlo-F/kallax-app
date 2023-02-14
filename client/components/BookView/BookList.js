@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import { Button, Card, Col, Row } from 'react-bootstrap'
 
 const BookList = ({ books, deleteBook, readBook }) => {
   if (!books) return null
@@ -16,17 +16,26 @@ const BookList = ({ books, deleteBook, readBook }) => {
   }
 
   return (
-    <div className="mt-4">
+    <div className="m-2 mt-4">
       <h4>Your books</h4>
-      <ul>
+      <Row xs={1} md={2} className="g-4">
         {books.map((book) => (
-          <li key={book.id}>
-            <span className="m-2"><Link to={`/book/${book.id}`}>{book.title}</Link> by <em>{book.author}</em> - times read: {book.times_read}</span>
-            <Button variant="success" className="m-2" onClick={handleRead(book)}>Read</Button>
-            <Button variant="danger" className="m-2" onClick={handleDelete(book)}>Delete</Button>
-          </li>
+          <Col>
+            <Card key={book.id}>
+              <Card.Body>
+                <Card.Title><Link to={`/book/${book.id}`}>{book.title}</Link> <span><small>(times read: {book.times_read})</small></span></Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">by {book.author}</Card.Subtitle>
+                <Card.Text>
+                  {book.plot.substring(0,50)+"..."}
+                </Card.Text>
+                <hr />
+                <Button variant="outline-success" className="m-2" onClick={handleRead(book)}>Mark as read</Button>
+                <Button variant="outline-danger" className="m-2" onClick={handleDelete(book)}>Delete book</Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </ul>
+      </Row>
     </div>
   )
 }

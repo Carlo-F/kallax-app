@@ -10,10 +10,10 @@ const NavBar = () => {
   }
 
   return (
-    <Navbar bg="light" expand="lg" className="navbar">
+    <Navbar expand="lg" className="navbar">
       <Container>
         <Navbar.Brand href="#home">
-          <img src={images.proFarmerLogo} width="100" alt="proFarmer" />
+          <img src={images.kallaxLogo} width="100" alt="kallax" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

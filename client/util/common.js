@@ -1,10 +1,10 @@
 /**
  * Insert common items for frontend here
  */
-import proFarmerLogo from 'Assets/profarmer-logo.png'
+import kallaxLogo from 'Assets/kallax.png'
 
 export const images = {
-  proFarmerLogo,
+  kallaxLogo,
 }
 
 // Everything from application wide common items is available through here

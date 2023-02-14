@@ -20,8 +20,8 @@ const BookForm = ({ book, updateBook, changeBook }) => {
 
   return (
     <div className="m-2">
-      <h4>Update your book</h4>
-      <Form onSubmit={handleSubmit}>
+      <h1 className="border-bottom">Your Book</h1>
+      <Form className="form mt-4" onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="title">
           <Form.Label>Book title</Form.Label>
           <Form.Control type="text" placeholder="es. The Bible" value={book.title} onChange={handleChange} />
@@ -36,7 +36,7 @@ const BookForm = ({ book, updateBook, changeBook }) => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="plot">
           <Form.Label>Enter book plot</Form.Label>
-          <Form.Control as="textarea" rows={3} value={book.plot} onChange={handleChange} />
+          <Form.Control as="textarea" rows={5} value={book.plot} onChange={handleChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="times_read">
           <Form.Label>Enter how many times have you read this book</Form.Label>

@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { getUsers } from 'Utilities/services/users'
-import { Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
+import Notification from 'Components/Notification'
 
 const FrontPage = () => {
   const [users, setUsers] = useState([])
-  const [userEmail, setUserEmail] = useState([])
   const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  const userOptions = users.map((user) => {
+    return (
+      <option key={user.id} value={user.email}>
+        {user.first_name}
+      </option>
+    )
+  })
 
   useEffect(() => {
     getUsers()
@@ -23,11 +32,10 @@ const FrontPage = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleOnChange = async (event) => {
 
     try {
-      const selectedUser = await users.find(user => user.email === userEmail)
+      const selectedUser = await users.find(user => user.email === event.target.value)
 
       if (!selectedUser) {
         throw 'User not found'
@@ -36,13 +44,11 @@ const FrontPage = () => {
         'loggedKallaxUser', JSON.stringify(selectedUser)
       )
       setUser(selectedUser)
-      setUserEmail('')
     } catch (exception) {
-      console.log(exception)
-      // setErrorMessage('Wrong credentials')
-      // setTimeout(() => {
-      //   setErrorMessage(null)
-      // }, 5000)
+      setErrorMessage(exception)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -53,28 +59,26 @@ const FrontPage = () => {
   
   return (
     <div className="container">
-      <h1>KALLAX Homepage</h1>
-      <h5>My personal swedish bookshelf</h5>
+      <h1 className="border-bottom">Welcome to <b>KALLAX</b></h1>
+      <h5>A personal swedish bookshelf</h5>
+      <Notification message={errorMessage} type={'error'} />
       {user === null && (
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              type="text"
-              value={userEmail}
-              name="UserEmail"
-              onChange={({ target }) => setUserEmail(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+      <div className="mt-4">
+        <Form.Select aria-label="Default select example" onChange={handleOnChange}>
+          <option>Seleziona utente</option>
+          {userOptions}
+        </Form.Select>
+      </div>
       )}
-      { user !== null && (
-      <p>
-          Hi {user.first_name}, 
-          <a href="/books">Check your Books</a> or
+      {user !== null && (
+      <div className="mt-4">
+        <p>
+          Hi {user.first_name}! <a href="/books">Go to your bookshelf</a>
+        </p>
+        <p>Want to change user?
           <Button variant="link" onClick={handleLogout}>Logout</Button>
         </p>
+      </div>
       )}
     </div>
   )
