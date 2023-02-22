@@ -20,7 +20,7 @@ const create = async (req, res) => {
 
   const sql = `
     INSERT INTO books (user_id, title, author, isbn_code, plot, times_read) 
-    VALUES (${book.userId},'${book.title}','${book.author}','${book.isbn_code}','${book.plot}',${book.times_read ?? 0})
+    VALUES (${book.userId},'${book.title}','${book.author}','${book.isbn_code}',"${book.plot}",${book.times_read ?? 0})
   `
 
   connection.query(sql, function (err, result, fields) {
